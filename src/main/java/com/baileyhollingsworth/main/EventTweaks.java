@@ -1,17 +1,15 @@
 package com.baileyhollingsworth.main;
 
 
-import com.baileyhollingsworth.main.eventHandlers.EXPEventHandler;
-import com.baileyhollingsworth.main.eventHandlers.ForestEventHandlers;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import com.baileyhollingsworth.main.eventHandlers.*;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = EventTweaks.MODID, version = EventTweaks.VERSION)
+@Mod(modid = EventTweaks.MODID, version = EventTweaks.VERSION, name = EventTweaks.MODID)
 public class EventTweaks
 {
     public static final String MODID = "event_tweaks";
@@ -24,12 +22,11 @@ public class EventTweaks
     public static EventTweaks instance;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event){
-        //logger = event.getModLog();
+    public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
     }
 
-    @Mod.EventHandler
+        @Mod.EventHandler
     public void init(FMLInitializationEvent e){
         proxy.init(e);
     }
@@ -40,18 +37,36 @@ public class EventTweaks
     }
 
     public static class CommonProxy {
+
         public void preInit(FMLPreInitializationEvent e){
-           // Configuration config = new Configuration(e.getSuggestedConfigurationFile());
-            //ConfigurationFile.configFile(config);
+            Configuration config = new Configuration(e.getSuggestedConfigurationFile());
+            ConfigurationFile.configFile(config);
         }
+
         public void init(FMLInitializationEvent e){
-            EXPEventHandler handler = new EXPEventHandler();
+            EXPEventHandler expEventHandler = new EXPEventHandler();
             ForestEventHandlers forestHandler = new ForestEventHandlers();
-            MinecraftForge.EVENT_BUS.register(handler);
-            MinecraftForge.EVENT_BUS.register(forestHandler);
-            FMLCommonHandler.instance().bus().register(handler);
-            FMLCommonHandler.instance().bus().register(forestHandler);
+            MobEventHandler mobEventHandler = new MobEventHandler();
+            SleepingEventHandler sleepEventHandler = new SleepingEventHandler();
+            InteractEventHandler interactEventHandler = new InteractEventHandler();
+            if(ConfigurationFile.loadForestHandlers){
+                forestHandler.registerEventHandler();
+            }
+            //if(ConfigurationFile.loadMobHandlers){
+                mobEventHandler.registerEventHandler();
+            //}
+            if(ConfigurationFile.loadSleepHandlers){
+                sleepEventHandler.registerEventHandler();
+            }
+            if(ConfigurationFile.loadEXPHandlers){
+                expEventHandler.registerEventHandler();
+            }
+
+            if(true){
+                interactEventHandler.registerEventHandler();
+            }
         }
+
         public void postInit(FMLPostInitializationEvent e){
 
         }
