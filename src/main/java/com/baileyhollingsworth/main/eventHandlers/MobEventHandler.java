@@ -32,13 +32,10 @@ public class MobEventHandler extends BaseEventHandler {
                 && ConfigurationFile.hardcoreAir){
             ((EntityLivingBase)e.getEntity()).setHealth(0.0f);
         }
-
-        if(e.getSource() == DamageSource.starve && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
+        else if(e.getSource() == DamageSource.starve && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
                 && ConfigurationFile.hardcoreHunger){
             ((EntityLivingBase)e.getEntity()).setHealth(0.0f);
-        }
-        
-        if(e.getSource().getEntity() instanceof EntityPlayer && ConfigurationFile.mobsRevengeMode) {
+        }else if(e.getSource().getEntity() instanceof EntityPlayer && ConfigurationFile.mobsRevengeMode) {
             try {
                 if (!(e.getEntity() instanceof EntityMob) && !(e.getEntity() instanceof EntityPlayer)) {
                     ((EntityLiving) e.getEntity()).addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, 1));
