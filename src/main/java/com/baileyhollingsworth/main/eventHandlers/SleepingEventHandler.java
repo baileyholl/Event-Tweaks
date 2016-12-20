@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class SleepingEventHandler extends BaseEventHandler{
     @SubscribeEvent
     public void PlayerWakeUpEvent(PlayerWakeUpEvent e){
-        if(ConfigurationFile.sleepingHealValue > 0.0f) {
+        if(!e.getEntity().getEntityWorld().isRemote && ConfigurationFile.sleepingHealValue > 0.0f && !e.updateWorld()) {
             e.getEntityPlayer().heal(ConfigurationFile.sleepingHealValue);
-            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("You feel refreshed and healthier..."));
+            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("You feel refreshed..."));
         }
     }
 }

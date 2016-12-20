@@ -11,9 +11,11 @@ public class EXPEventHandler extends BaseEventHandler {
 
     @SubscribeEvent
     public void healPlayerWithExp(PlayerPickupXpEvent e) {
-        e.getOrb().xpValue *=  1.0;
-        if(ConfigurationFile.xpOrbHealValue > 0.0f){
-            e.getEntityPlayer().heal(ConfigurationFile.xpOrbHealValue);
+        if(!e.getEntity().getEntityWorld().isRemote) {
+            e.getOrb().xpValue *= 1.0;
+            if (ConfigurationFile.xpOrbHealValue > 0.0f) {
+                e.getEntityPlayer().heal(ConfigurationFile.xpOrbHealValue);
+            }
         }
     }
 }

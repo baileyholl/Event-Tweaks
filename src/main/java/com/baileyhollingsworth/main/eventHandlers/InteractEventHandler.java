@@ -14,15 +14,16 @@ public class InteractEventHandler extends BaseEventHandler{
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void stopBedUse(PlayerInteractEvent e){
-        if(e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.BED && ConfigurationFile.clickingBedSetsSpawnPoint){
-            e.getEntityPlayer().setSpawnPoint(e.getPos(), true);
-            e.getEntityPlayer().bedLocation = e.getPos();
-            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("Spawn point set!"));
-        }
-
-        if(ConfigurationFile.stopBedUse){
-            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("You don't feel tired enough to sleep.."));
-            e.setCanceled(true);
+        if(!e.getWorld().isRemote) {
+            if (e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.BED && ConfigurationFile.clickingBedSetsSpawnPoint) {
+                e.getEntityPlayer().setSpawnPoint(e.getPos(), true);
+                e.getEntityPlayer().bedLocation = e.getPos();
+                e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("Spawn point set!"));
+                if (ConfigurationFile.stopBedUse && !e.getEntity().getEntityWorld().isDaytime()) {
+                    e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("You don't feel tired enough to sleep.."));
+                    e.setCanceled(true);
+                }
+            }
         }
     }
 

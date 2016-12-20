@@ -19,7 +19,7 @@ public class ForestEventHandlers extends BaseEventHandler {
     @SubscribeEvent
     public void HarvestDropsEvent(BlockEvent.HarvestDropsEvent e){
         if (e.getHarvester() == null && !e.getDrops().isEmpty() && ((e.getState().getBlock().equals(Blocks.LEAVES))
-                || e.getState().getBlock().equals(Blocks.LEAVES2))){
+                || e.getState().getBlock().equals(Blocks.LEAVES2)) && !e.getWorld().isRemote){
             Block block = Block.getBlockFromItem(e.getDrops().get(0).getItem());
             int meta = e.getDrops().get(0).getMetadata();
             BlockPos pos = findGround(e.getWorld(), e.getPos());

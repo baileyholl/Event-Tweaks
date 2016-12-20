@@ -20,28 +20,31 @@ public class MobEventHandler extends BaseEventHandler {
 
     @SubscribeEvent
     public void creeperExplodesOnDeath(LivingDeathEvent e){
-        if(e.getEntity() instanceof EntityCreeper && ConfigurationFile.explosionOnCreeperDeathValue > 0){
-            e.getEntity().getEntityWorld().createExplosion(e.getEntity(), e.getEntity().posX, e.getEntity().posY,
-                    e.getEntity().posZ, ConfigurationFile.explosionOnCreeperDeathValue, ConfigurationFile.creeperDeathExplosionIsDestructive);
+        if(!e.getEntity().getEntityWorld().isRemote) {
+            if (e.getEntity() instanceof EntityCreeper && ConfigurationFile.explosionOnCreeperDeathValue > 0) {
+                e.getEntity().getEntityWorld().createExplosion(e.getEntity(), e.getEntity().posX, e.getEntity().posY,
+                        e.getEntity().posZ, ConfigurationFile.explosionOnCreeperDeathValue, ConfigurationFile.creeperDeathExplosionIsDestructive);
+            }
         }
     }
 
     @SubscribeEvent
     public void revengeModeMobs(LivingHurtEvent e){
-        if(e.getSource() == DamageSource.drown && e.getEntity().isWet() && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
-                && ConfigurationFile.hardcoreAir){
-            ((EntityLivingBase)e.getEntity()).setHealth(0.0f);
-        }
-        else if(e.getSource() == DamageSource.starve && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
-                && ConfigurationFile.hardcoreHunger){
-            ((EntityLivingBase)e.getEntity()).setHealth(0.0f);
-        }else if(e.getSource().getEntity() instanceof EntityPlayer && ConfigurationFile.mobsRevengeMode) {
-            try {
-                if (!(e.getEntity() instanceof EntityMob) && !(e.getEntity() instanceof EntityPlayer)) {
-                    ((EntityLiving) e.getEntity()).addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, 1));
+        if(!e.getEntity().getEntityWorld().isRemote) {
+            if (e.getSource() == DamageSource.drown && e.getEntity().isWet() && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
+                    && ConfigurationFile.hardcoreAir) {
+                ((EntityLivingBase) e.getEntity()).setHealth(0.0f);
+            } else if (e.getSource() == DamageSource.starve && e.getEntity() instanceof EntityPlayer && ((EntityPlayer) e.getEntity()).getHealth() > 0.0f
+                    && ConfigurationFile.hardcoreHunger) {
+                ((EntityLivingBase) e.getEntity()).setHealth(0.0f);
+            } else if (e.getSource().getEntity() instanceof EntityPlayer && ConfigurationFile.mobsRevengeMode) {
+                try {
+                    if (!(e.getEntity() instanceof EntityMob) && !(e.getEntity() instanceof EntityPlayer)) {
+                        ((EntityLiving) e.getEntity()).addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, 1));
+                    }
+                } catch (ClassCastException e1) {
+                    e1.printStackTrace();
                 }
-            }catch(ClassCastException e1){
-                e1.printStackTrace();
             }
         }
     }
