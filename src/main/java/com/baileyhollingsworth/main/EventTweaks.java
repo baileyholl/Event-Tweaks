@@ -49,12 +49,13 @@ public class EventTweaks
             MobEventHandler mobEventHandler = new MobEventHandler();
             SleepingEventHandler sleepEventHandler = new SleepingEventHandler();
             InteractEventHandler interactEventHandler = new InteractEventHandler();
+
             if(ConfigurationFile.loadForestHandlers){
                 forestHandler.registerEventHandler();
             }
-            //if(ConfigurationFile.loadMobHandlers){
+            if(ConfigurationFile.loadMobHandlers){
                 mobEventHandler.registerEventHandler();
-            //}
+            }
             if(ConfigurationFile.loadSleepHandlers){
                 sleepEventHandler.registerEventHandler();
             }
@@ -62,7 +63,7 @@ public class EventTweaks
                 expEventHandler.registerEventHandler();
             }
 
-            if(true){
+            if(ConfigurationFile.loadInteractionHandlers){
                 interactEventHandler.registerEventHandler();
             }
         }

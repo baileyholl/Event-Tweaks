@@ -2,6 +2,7 @@ package com.baileyhollingsworth.main.eventHandlers;
 
 import com.baileyhollingsworth.main.ConfigurationFile;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,9 +17,11 @@ public class InteractEventHandler extends BaseEventHandler{
         if(e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.BED && ConfigurationFile.clickingBedSetsSpawnPoint){
             e.getEntityPlayer().setSpawnPoint(e.getPos(), true);
             e.getEntityPlayer().bedLocation = e.getPos();
+            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("Spawn point set!"));
         }
 
         if(ConfigurationFile.stopBedUse){
+            e.getEntityPlayer().addChatComponentMessage(new TextComponentTranslation("You don't feel tired enough to sleep.."));
             e.setCanceled(true);
         }
     }
