@@ -1,6 +1,6 @@
 package com.baileyhollingsworth.main.eventHandlers;
 
-import com.baileyhollingsworth.main.ConfigurationFile;
+import com.baileyhollingsworth.main.core.ConfigurationFile;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

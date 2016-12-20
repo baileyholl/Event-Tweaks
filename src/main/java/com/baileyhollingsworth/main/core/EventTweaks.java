@@ -1,6 +1,7 @@
-package com.baileyhollingsworth.main;
+package com.baileyhollingsworth.main.core;
 
 
+import com.baileyhollingsworth.main.core.versionChecker.VersionChecker;
 import com.baileyhollingsworth.main.eventHandlers.*;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -13,7 +14,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class EventTweaks
 {
     public static final String MODID = "event_tweaks";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.0.0";
+    public static final String URL = "https://raw.githubusercontent.com/baileyholl/Event-Tweaks/master/Version";
 
     @SidedProxy
     public static CommonProxy proxy;
@@ -77,6 +79,7 @@ public class EventTweaks
         @Override
         public void preInit(FMLPreInitializationEvent e){
             super.preInit(e);
+            new VersionChecker().init();
         }
     }
 

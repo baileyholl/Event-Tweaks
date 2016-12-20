@@ -1,6 +1,6 @@
 package com.baileyhollingsworth.main.eventHandlers;
 
-import com.baileyhollingsworth.main.ConfigurationFile;
+import com.baileyhollingsworth.main.core.ConfigurationFile;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;

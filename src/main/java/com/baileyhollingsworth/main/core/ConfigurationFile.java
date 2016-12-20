@@ -1,4 +1,4 @@
-package com.baileyhollingsworth.main;
+package com.baileyhollingsworth.main.core;
 
 import net.minecraftforge.common.config.Configuration;
 
@@ -29,6 +29,7 @@ public class ConfigurationFile {
     public static boolean loadEXPHandlers;
     public static boolean loadInteractionHandlers;
     public static boolean hardcoreHunger;
+    public static boolean versionChecker;
 
     public static void configFile(Configuration config){
         config.load();
@@ -37,6 +38,7 @@ public class ConfigurationFile {
         getSleepEventValues(config);
         getMobEventValues(config);
         getInteractionValues(config);
+        versionChecker = config.getBoolean("Enable Version Checker",Configuration.CATEGORY_CLIENT, true, "Latest builds are fewer bugs!");
         if (config.hasChanged()) {
             config.save();
         }

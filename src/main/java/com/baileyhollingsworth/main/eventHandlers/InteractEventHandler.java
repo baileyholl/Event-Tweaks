@@ -1,6 +1,6 @@
 package com.baileyhollingsworth.main.eventHandlers;
 
-import com.baileyhollingsworth.main.ConfigurationFile;
+import com.baileyhollingsworth.main.core.ConfigurationFile;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
