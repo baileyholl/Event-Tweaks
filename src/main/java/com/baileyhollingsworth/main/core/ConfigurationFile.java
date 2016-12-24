@@ -12,6 +12,8 @@ public class ConfigurationFile {
     private static String EXP = "EXP Events. Requires EXP Event Handler = true";
     private static String MOB = "Mob Events. Requires Mob Event Handler = true";
     private static String INTERACTION = "Item/Block Interaction Events. Requires Item/Block Interaction Event Handler = true";
+    private static String TICK = "Tick Events. Requires Tick Event Handler = true";
+    private static String POTION_ON_TICK = "Applying Potion At Certain Level Event. Requires Tick Event Handler = true";
 
     public static float xpOrbHealValue;
     public static float sleepingHealValue;
@@ -25,11 +27,18 @@ public class ConfigurationFile {
     public static boolean clickingBedSetsSpawnPoint;
     public static boolean hardcoreAir;
 
+    public static int secondsPerReapply;
+    public static int potionIDToApply;
+    public static int potionAmplifier;
+    public static int levelsRequiredForPotion;
+
+
     public static boolean loadForestHandlers;
     public static boolean loadSleepHandlers;
     public static boolean loadMobHandlers;
     public static boolean loadEXPHandlers;
     public static boolean loadInteractionHandlers;
+    public static boolean loadTickHandlers;
     public static boolean hardcoreHunger;
     public static boolean versionChecker;
 
@@ -40,10 +49,18 @@ public class ConfigurationFile {
         getSleepEventValues(config);
         getMobEventValues(config);
         getInteractionValues(config);
+        getTickEventValues(config);
         versionChecker = config.getBoolean("Enable Version Checker",Configuration.CATEGORY_CLIENT, true, "Latest builds are fewer bugs!");
         if (config.hasChanged()) {
             config.save();
         }
+    }
+
+    private static void getTickEventValues(Configuration config) {
+        secondsPerReapply = config.getInt("How many seconds this event will run", ConfigurationFile.POTION_ON_TICK, 1, 1, 10, "Higher values will impact performance less. Potion also refreshes and applies on this interval.");
+        potionIDToApply = config.getInt("Potion ID To Apply", ConfigurationFile.POTION_ON_TICK, 1, 1, 1024, "Invalid potion IDs will default to 1. Minecraft IDs: http://minecraft.gamepedia.com/Status_effect");
+        levelsRequiredForPotion = config.getInt("Minimum Required Levels To Apply Potion Effect", ConfigurationFile.POTION_ON_TICK, 10, 0, 999, "Checks values including and greater");
+        potionAmplifier = config.getInt("Potion Effect Amplifier", ConfigurationFile.POTION_ON_TICK,0, 0, 999, "0 = base potion");
     }
 
     private static void getInteractionValues(Configuration config){
@@ -76,6 +93,7 @@ public class ConfigurationFile {
         loadMobHandlers = config.getBoolean("Mob Event Handler", ConfigurationFile.HANDLERS, false,"Enables Mob Events");
         loadSleepHandlers = config.getBoolean("Sleep Event Handler", ConfigurationFile.HANDLERS, false, "Enables Sleeping Events.");
         loadInteractionHandlers = config.getBoolean("Item/Block Interaction Handler", ConfigurationFile.HANDLERS, false, "Enables Interaction Events");
+        loadTickHandlers = config.getBoolean("Tick Event Handler",ConfigurationFile.TICK, false,"Enables Tick Events");
     }
 
 }

@@ -51,7 +51,7 @@ public class EventTweaks
             MobEventHandler mobEventHandler = new MobEventHandler();
             SleepingEventHandler sleepEventHandler = new SleepingEventHandler();
             InteractEventHandler interactEventHandler = new InteractEventHandler();
-
+            TickEventHandler tickEventHandler = new TickEventHandler();
             if(ConfigurationFile.loadForestHandlers){
                 forestHandler.registerEventHandler();
             }
@@ -67,6 +67,10 @@ public class EventTweaks
 
             if(ConfigurationFile.loadInteractionHandlers){
                 interactEventHandler.registerEventHandler();
+            }
+            if(ConfigurationFile.loadTickHandlers) {
+                tickEventHandler.registerEventHandler();
+                tickEventHandler.setupValues();
             }
         }
 
