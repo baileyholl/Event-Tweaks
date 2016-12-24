@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
-import java.io.IOException;
-
 /**
  * Created by Bailey Hollingsworth on 12/19/16.
  */
@@ -25,7 +23,7 @@ public class VersionChecker {
     }
 
     @SubscribeEvent
-    public void onTick(ClientTickEvent event) throws IOException {
+    public void onTick(ClientTickEvent event){
         if(!doneChecking && Minecraft.getMinecraft().thePlayer != null){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(!VersionChecker.version.equals(EventTweaks.VERSION) && ConfigurationFile.versionChecker){

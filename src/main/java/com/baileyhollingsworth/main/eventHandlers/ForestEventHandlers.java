@@ -23,10 +23,9 @@ public class ForestEventHandlers extends BaseEventHandler {
             Block block = Block.getBlockFromItem(e.getDrops().get(0).getItem());
             int meta = e.getDrops().get(0).getMetadata();
             BlockPos pos = findGround(e.getWorld(), e.getPos());
-            if(block != null && pos != null){
+            if(pos != null){
                 e.getWorld().setBlockState(pos, block.getStateFromMeta(meta));
                 deleteCopySapling(e.getWorld(), pos, Item.getItemFromBlock(block));
-                return;
             }
         }
     }

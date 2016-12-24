@@ -19,6 +19,8 @@ public class ConfigurationFile {
     public static int explosionOnCreeperDeathValue;
     public static boolean creeperDeathExplosionIsDestructive;
     public static boolean mobsRevengeMode;
+    public static boolean playerKeepsExpOnDeath;
+    public static boolean stopMobsFromTeleporting;
     public static boolean stopBedUse;
     public static boolean clickingBedSetsSpawnPoint;
     public static boolean hardcoreAir;
@@ -63,7 +65,8 @@ public class ConfigurationFile {
         explosionOnCreeperDeathValue = config.getInt("Creeper Death Explosion Strength", ConfigurationFile.MOB, 0, 0, 9, "If larger than 0, creepers will explode when they die. Normal Creeper Explosion = 3");
         creeperDeathExplosionIsDestructive = config.getBoolean("Creeper Death Explosion Destroys Terrain", ConfigurationFile.MOB, false, "");
         mobsRevengeMode = config.getBoolean("Mobs Get Strength Boost When Damaged By Player", ConfigurationFile.MOB, false, "");
-
+        playerKeepsExpOnDeath = config.getBoolean("Player Keeps EXP Level On Death", ConfigurationFile.MOB, false, "");
+        stopMobsFromTeleporting = config.getBoolean("Stop Mobs From Teleporting", ConfigurationFile.MOB, false, "Stops mobs like Enderman and Shulkers from warping away");
     }
 
 
