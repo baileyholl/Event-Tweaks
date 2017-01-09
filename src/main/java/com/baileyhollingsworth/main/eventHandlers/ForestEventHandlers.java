@@ -8,6 +8,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
@@ -16,17 +17,22 @@ import java.util.List;
  * Created by Bailey Hollingsworth on 12/17/16.
  */
 public class ForestEventHandlers extends BaseEventHandler {
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void HarvestDropsEvent(BlockEvent.HarvestDropsEvent e){
-        if (e.getHarvester() == null && !e.getDrops().isEmpty() && ((e.getState().getBlock().equals(Blocks.LEAVES))
-                || e.getState().getBlock().equals(Blocks.LEAVES2)) && !e.getWorld().isRemote){
-            Block block = Block.getBlockFromItem(e.getDrops().get(0).getItem());
-            int meta = e.getDrops().get(0).getMetadata();
-            BlockPos pos = findGround(e.getWorld(), e.getPos());
-            if(pos != null){
-                e.getWorld().setBlockState(pos, block.getStateFromMeta(meta));
-                deleteCopySapling(e.getWorld(), pos, Item.getItemFromBlock(block));
+        try {
+            if (e != null && e.getHarvester() == null && !e.getDrops().isEmpty() && ((e.getState().getBlock().equals(Blocks.LEAVES))
+                    || e.getState().getBlock().equals(Blocks.LEAVES2)) && !e.getWorld().isRemote) {
+                Block block = Block.getBlockFromItem(e.getDrops().get(0).getItem());
+                int meta = e.getDrops().get(0).getMetadata();
+                BlockPos pos = findGround(e.getWorld(), e.getPos());
+                if (pos != null && e.getWorld() != null) {
+                    e.getWorld().setBlockState(pos, block.getStateFromMeta(meta));
+                    deleteCopySapling(e.getWorld(), pos, Item.getItemFromBlock(block));
+                }
             }
+        }catch(Throwable throwable){
+            System.out.println("    EXCEPTION FOUND IN EVENT TWEAKS FOREST REPLANTING: PLEASE REPORT LOGS TO EVENT TWEAKS WITH INFORMATION ON REPRODUCING");
+            throwable.printStackTrace();
         }
     }
 
@@ -34,7 +40,7 @@ public class ForestEventHandlers extends BaseEventHandler {
         List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(
                 pos.add(-4, -4, -4), pos.add(4, 4, 4)));
         for(EntityItem i: list){
-            if(i.getEntityItem().getItem() == item){
+            if(!i.isDead && i.getEntityItem().getItem() == item){
                 i.setDead();
                 return true;
             }

@@ -13,8 +13,8 @@ public class TickEventHandler extends BaseEventHandler{
     private static int tickCount;
     private static int secondsInTicks;
     private static Potion potion;
-
     public int amplifier;
+
     @SubscribeEvent
     public void applyPotionWithCertainLevel(TickEvent.PlayerTickEvent e){
         tickCount++;

@@ -14,6 +14,7 @@ public class ConfigurationFile {
     private static String INTERACTION = "Item/Block Interaction Events. Requires Item/Block Interaction Event Handler = true";
     private static String TICK = "Tick Events. Requires Tick Event Handler = true";
     private static String POTION_ON_TICK = "Applying Potion At Certain Level Event. Requires Tick Event Handler = true";
+    private static String MISC = "Misc Tweaks. Do not require any handler to be enabled.";
 
     public static float xpOrbHealValue;
     public static float sleepingHealValue;
@@ -41,6 +42,7 @@ public class ConfigurationFile {
     public static boolean loadTickHandlers;
     public static boolean hardcoreHunger;
     public static boolean versionChecker;
+    public static boolean stopEndermanGriefing;
 
     public static void configFile(Configuration config){
         config.load();
@@ -55,6 +57,11 @@ public class ConfigurationFile {
             config.save();
         }
     }
+
+    private static void getMiscTweaks(Configuration config){
+        stopEndermanGriefing = config.getBoolean("Stop enderman from picking up blocks", ConfigurationFile.MISC, false, "");
+    }
+
 
     private static void getTickEventValues(Configuration config) {
         secondsPerReapply = config.getInt("How many seconds this event will run", ConfigurationFile.POTION_ON_TICK, 1, 1, 10, "Higher values will impact performance less. Potion also refreshes and applies on this interval.");
