@@ -52,6 +52,7 @@ public class ConfigurationFile {
         getMobEventValues(config);
         getInteractionValues(config);
         getTickEventValues(config);
+        getMiscTweaks(config);
         versionChecker = config.getBoolean("Enable Version Checker",Configuration.CATEGORY_CLIENT, true, "Latest builds are fewer bugs!");
         if (config.hasChanged()) {
             config.save();
@@ -102,5 +103,4 @@ public class ConfigurationFile {
         loadInteractionHandlers = config.getBoolean("Item/Block Interaction Handler", ConfigurationFile.HANDLERS, false, "Enables Interaction Events");
         loadTickHandlers = config.getBoolean("Tick Event Handler",ConfigurationFile.TICK, false,"Enables Tick Events");
     }
-
 }

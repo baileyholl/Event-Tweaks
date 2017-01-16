@@ -89,8 +89,4 @@ public class EventTweaks
             new VersionChecker().init();
         }
     }
-
-    public static class ServerProxy extends CommonProxy{
-
-    }
 }

@@ -9,6 +9,5 @@ public abstract class BaseEventHandler {
     public void registerEventHandler(){
         System.out.println("Registering: " + this.toString());
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(this);
     }
 }
