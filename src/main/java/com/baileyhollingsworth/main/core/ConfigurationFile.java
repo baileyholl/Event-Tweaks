@@ -43,6 +43,7 @@ public class ConfigurationFile {
     public static boolean hardcoreHunger;
     public static boolean versionChecker;
     public static boolean stopEndermanGriefing;
+    public static int hungerLevelAfterDeath;
 
     public static void configFile(Configuration config){
         config.load();
@@ -74,8 +75,6 @@ public class ConfigurationFile {
     private static void getInteractionValues(Configuration config){
         stopBedUse = config.getBoolean("Disable Sleeping In Bed", ConfigurationFile.INTERACTION, false, "Disables crawling into bed.");
         clickingBedSetsSpawnPoint = config.getBoolean("Clicking Bed Sets Spawn Point", ConfigurationFile.INTERACTION, false,"Sets player spawn point on top of bed. DOES NOT GO AWAY WHEN BED IS DESTROYED!");
-        hardcoreAir = config.getBoolean("Hardcore Air", ConfigurationFile.INTERACTION, false,"Players will die instantly when taking drowning damage");
-        hardcoreHunger = config.getBoolean("Hardcore Hunger", ConfigurationFile.INTERACTION, false, "Players will die when taking starvation damage");
     }
     private static void getEXPEventValues(Configuration config) {
         xpOrbHealValue = config.getFloat("XP Healing Value",ConfigurationFile.EXP, 0.0f, 0.0f, 20.0f, "How much each EXP orb should heal the player. Recommended: 0.1");
@@ -92,6 +91,9 @@ public class ConfigurationFile {
         mobsRevengeMode = config.getBoolean("Mobs Get Strength Boost When Damaged By Player", ConfigurationFile.MOB, false, "");
         playerKeepsExpOnDeath = config.getBoolean("Player Keeps EXP Level On Death", ConfigurationFile.MOB, false, "");
         stopMobsFromTeleporting = config.getBoolean("Stop Mobs From Teleporting", ConfigurationFile.MOB, false, "Stops mobs like Enderman and Shulkers from warping away");
+        hardcoreAir = config.getBoolean("Hardcore Air", ConfigurationFile.MOB, false,"Players will die instantly when taking drowning damage");
+        hardcoreHunger = config.getBoolean("Hardcore Hunger", ConfigurationFile.MOB, false, "Players will die when taking starvation damage");
+        hungerLevelAfterDeath = config.getInt("Hunger Level After Death", ConfigurationFile.MOB, 20, 0,20, "");
     }
 
 

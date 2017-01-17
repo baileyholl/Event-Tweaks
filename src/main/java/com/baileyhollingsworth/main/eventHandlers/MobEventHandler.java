@@ -33,7 +33,7 @@ public class MobEventHandler extends BaseEventHandler {
     }
 
     @SubscribeEvent
-    public void revengeModeMobs(LivingHurtEvent e) {
+    public void hurtEvents(LivingHurtEvent e) {
         if (!e.getEntity().getEntityWorld().isRemote) {
             DamageSource source = e.getSource();
             Entity entity = e.getEntity();
@@ -56,8 +56,11 @@ public class MobEventHandler extends BaseEventHandler {
 
     @SubscribeEvent
     public void playersKeepEXPOnDeath(PlayerEvent.Clone e) {
-        if (e.isWasDeath() && ConfigurationFile.playerKeepsExpOnDeath) {
-            e.getEntityPlayer().experienceLevel = e.getOriginal().experienceLevel;
+        if (e.isWasDeath()) {
+            if(ConfigurationFile.playerKeepsExpOnDeath) {
+                e.getEntityPlayer().experienceLevel = e.getOriginal().experienceLevel;
+            }
+            e.getEntityPlayer().getFoodStats().setFoodLevel(ConfigurationFile.hungerLevelAfterDeath);
         }
     }
 
